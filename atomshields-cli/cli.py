@@ -27,6 +27,9 @@ class AtomshieldsCli(object):
 	def __init__(self, verbose = False):
 		"""
 		Class constructor
+
+		Args:
+			verose(bool): True if the execution should run verboselly. False else
 		"""
 		self._context = None
 		self._action = None
@@ -36,10 +39,23 @@ class AtomshieldsCli(object):
 
 	@property
 	def context(self):
+		"""
+		Getter for 'context' property
+
+		Returns:
+			string: Execution context.
+		"""
 		return self._context
 
 	@context.setter
 	def context(self, value):
+		"""
+		Setter for 'context' property
+
+		Args:
+			value (str): Execution context.
+
+		"""
 		if value is not None:
 			self._context = value.lower()
 		else:
@@ -47,10 +63,23 @@ class AtomshieldsCli(object):
 
 	@property
 	def verbose(self):
+		"""
+		Getter for 'verbose' property
+
+		Returns:
+			bool: Verbose flag.
+		"""
 		return self._verbose
 
 	@verbose.setter
 	def verbose(self, value):
+		"""
+		Setter for 'verbose' property
+
+		Args:
+			value (bool): Verbose flag.
+
+		"""
 		if value is not None and value:
 			self._verbose = True
 		else:
@@ -58,10 +87,23 @@ class AtomshieldsCli(object):
 
 	@property
 	def action(self):
+		"""
+		Getter for 'action' property
+
+		Returns:
+			string: Action to execute.
+		"""
 		return self._action
 
 	@action.setter
 	def action(self, value):
+		"""
+		Setter for 'context' property
+
+		Args:
+			value (str): Action to execute.
+
+		"""
 		if value is not None:
 			self._action = value.lower()
 		else:
@@ -69,10 +111,23 @@ class AtomshieldsCli(object):
 
 	@property
 	def path(self):
+		"""
+		Getter for 'path' property
+
+		Returns:
+			string: Path value.
+		"""
 		return self._path
 
 	@path.setter
 	def path(self, value):
+		"""
+		Setter for 'path' property
+
+		Args:
+			value (str): Path value.
+
+		"""
 		if value is not None and os.path.exists(value):
 			self._path = os.path.abspath(value)
 		else:
@@ -80,21 +135,38 @@ class AtomshieldsCli(object):
 
 	@property
 	def name(self):
+		"""
+		Getter for 'name' property
+
+		Returns:
+			string: Project's name.
+		"""
 		return self._name
 
 	@name.setter
 	def name(self, value):
+		"""
+		Setter for 'name' property
+
+		Args:
+			value (str): Project's name.
+
+		"""
 		self._name = value
 
 
 
-
-	def getFiles(self, path, extension="*.py", exclude=[]):
-		_p = os.path.join(path, extension)
-		return [fn for fn in glob.glob(_p) if not os.path.basename(fn) in exclude]
-
 	def getPlugins(self, path, classArgs = None):
-		
+		"""
+		Gets the plugins data. Find all the *.py files in <path> and returns his plugin name and description.
+
+		Args:
+			path(str): 	Path to find python files
+			classArgs(str): Class arguments to instanciate the class
+
+		Returns:
+			dict:	Dictionary which contains the plugin's name as key, and the plugin's description as value.
+		"""
 		if classArgs is None:
 			classArgs = {}
 
@@ -110,6 +182,13 @@ class AtomshieldsCli(object):
 		return data
 
 	def _show(self, path, classArgs = None):
+		"""
+		Prints the plugins into <path>.
+		
+		Args:
+			path(str): 	Path to find python files
+			classArgs(str): Class arguments to instanciate the class
+		"""
 		if classArgs is None:
 			classArgs = {}
 
@@ -118,6 +197,9 @@ class AtomshieldsCli(object):
 			print "%-20s\t%-60s" % (k, items[k])
 
 	def showCheckers(self):
+		"""
+		Prints all the checkers.
+		"""
 		print ""
 		print "%-20s\t%-60s" % ("Name", "Description")
 		print "-"*90
@@ -125,6 +207,9 @@ class AtomshieldsCli(object):
 		print ""
 
 	def showReports(self):
+		"""
+		Prints all the reports.
+		"""
 		self._show(path = AtomShieldsScanner.REPORTS_DIR, classArgs = {})
 
 
