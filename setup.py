@@ -12,6 +12,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import shutil, os, stat
+
 from setuptools import find_packages
 from distutils.core import setup
 
@@ -19,7 +21,7 @@ def read_file(filename):
     with open(filename) as f:
         return f.read()
 
-package_name = 'atomshields-cli'
+package_name = 'atomshieldscli'
 
 setup(
   name = package_name,
@@ -52,4 +54,24 @@ setup(
   ],
 )
 
+
+# Install as binary
+paths = ["/usr/local/bin", "/usr/bin", "/usr/sbin"]
+installed = False
+for path in paths:
+  if os.access(path, os.W_OK):
+    #Copy file
+    source = os.path.join(os.path.dirname(__file__), package_name, 'cli.py')
+    destination = os.path.join(path, "ascli")
+    shutil.copy(source, destination)
+    # Add a+x
+    st = os.stat(destination)
+    os.chmod(destination, st.st_mode | stat.S_IEXEC)
+    print "{package} installed into {destination}".format(package=package_name, destination=destination)
+    installed = True
+    break
+
+if not installed:
+  from termcolor import colored
+  print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
 

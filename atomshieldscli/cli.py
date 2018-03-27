@@ -215,7 +215,7 @@ class AtomshieldsCli(object):
 
 	def printBanner(self):
 		rows, columns = map(int, os.popen('stty size', 'r').read().split())
-		import banner
+		import atomshieldscli.banner as banner
 		if columns >= 190:
 			print banner.big
 		else:
