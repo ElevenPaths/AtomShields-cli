@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
+#
+# This file is part of AtomShields
+# Copyright (C) ElevenPaths 
+#
+# DESCRIPTION
+# This file creates a CLI to interact with Atomshields
+#
+
 import os, sys
 import argparse
 import glob
@@ -223,7 +231,7 @@ class AtomshieldsCli(object):
 
 	def execute(self):
 		"""
-		To perform the needed tasks
+		Perform the needed tasks
 		"""
 		if self.context == self.__class__.CONTEXT_CHECKERS:
 			# Operate with checkers
