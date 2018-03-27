@@ -5,7 +5,7 @@ AtomShields Cli
 What is AtomShields Cli?
 --------------------
 
-Command-Line Interface to use the software `AtomShields <https://github.com/ElevenPaths/AtomShields>`
+Command-Line Interface to use the software `AtomShields <https://github.com/ElevenPaths/AtomShields>`_
 
 Installation
 ------------
