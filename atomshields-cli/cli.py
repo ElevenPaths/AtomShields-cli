@@ -11,13 +11,13 @@ from atomshields import *
 class AtomshieldsCli(object):
 
 	NAME = "AtomShields CLI"
+	COMMAND = "ascli"
 
 	ACTION_INSTALL = "install"
 	ACTION_UNINSTALL = "uninstall"
 	ACTION_SHOW = "show"
 	ACTION_RUN = "run"
-	ACTION_HELP = "help"
-	ACTIONS = [ACTION_INSTALL, ACTION_UNINSTALL, ACTION_SHOW, ACTION_RUN, ACTION_HELP]
+	ACTIONS = [ACTION_INSTALL, ACTION_UNINSTALL, ACTION_SHOW, ACTION_RUN]
 
 
 	CONTEXT_CHECKERS = "checkers"
@@ -213,9 +213,13 @@ class AtomshieldsCli(object):
 		self._show(path = AtomShieldsScanner.REPORTS_DIR, classArgs = {})
 
 
-	@staticmethod
-	def help():
-		return ""
+	def printBanner(self):
+		rows, columns = map(int, os.popen('stty size', 'r').read().split())
+		import banner
+		if columns >= 190:
+			print banner.big
+		else:
+			print banner.small
 
 	def execute(self):
 		"""
@@ -252,6 +256,9 @@ class AtomshieldsCli(object):
 				# Run the scan
 				if self.path is None:
 					raise Exception("You must set a target path.")
+
+				# Print banner
+				self.printBanner()
 				instance = AtomShieldsScanner(self.path, verbose=self.verbose)
 				instance.project = self.name
 				instance.run()
@@ -261,12 +268,15 @@ class AtomshieldsCli(object):
 if __name__ == "__main__":
 
 	# Get Args
-	parser = argparse.ArgumentParser(prog=AtomshieldsCli.NAME)
-	parser.add_argument("action", action="store", default="show", help="Set the action to do")
-	parser.add_argument("context", nargs='?', action="store", default=None, help="Set the context to operate with checkers")
-	parser.add_argument("--target", action="store", metavar="path_to_scan", help="Set the target folder to scan")
-	parser.add_argument("--name", action="store", required=False, metavar="project_name", help="Set the project (repo) name")
-	parser.add_argument("-v","--verbose", action="store_true", help="Run verboselly")
+	parser = argparse.ArgumentParser(prog=AtomshieldsCli.COMMAND, add_help=True,
+		formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=50, width=120), 
+		description="""Performs an action into a context. The actions are defines in the first argument, and the context in the second. You also can set options.""", 
+		epilog="""For more documentation, please visit https://github.com/ElevenPaths/AtomShields-cli\n\n""")
+	parser.add_argument("action", action="store", default="show", help="Set the action to do. Allowed values are: {actions}".format(actions=', '.join(AtomshieldsCli.ACTIONS)))
+	parser.add_argument("context", nargs='?', action="store", default=None, help="Set the context to operate with checkers. Allowed values are: {contexts}".format(contexts=', '.join(AtomshieldsCli.CONTEXTS)))
+	parser.add_argument("-t", "--target", action="store", metavar="path_to_scan", help="Set the target folder to scan. If action is install/uninstall, this value should be the absolute path to plugin. For uninstall action could be the plugin name.")
+	parser.add_argument("-n", "--name", action="store", required=False, metavar="project_name", help="Set the project (repository) name")
+	parser.add_argument("-v","--verbose", action="store_true", help="Run verbosely")
 	args = parser.parse_args()
 
 
@@ -274,10 +284,6 @@ if __name__ == "__main__":
 	if args.action.lower() not in AtomshieldsCli.ACTIONS:
 		raise Exception("Invalid action. Allowed values: {actions}".format(actions=str(AtomshieldsCli.ACTIONS)))
 
-
-	# Print Help
-	if args.action.lower() == AtomshieldsCli.ACTION_HELP:
-		print AtomshieldsCli.help()
 
 
 	cli = AtomshieldsCli(verbose = args.verbose)
