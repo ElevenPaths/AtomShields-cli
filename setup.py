@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 u"""
 Copyright 2018 ElevenPaths - Telefonica Digital España
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
+
     http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,7 +16,6 @@ limitations under the License.
 """
 
 import shutil, os, stat
-
 from setuptools import find_packages
 from distutils.core import setup
 
@@ -35,7 +37,7 @@ setup(
   author_email = 'diego.fernandez@11paths.com, david.amrani@11paths.com',
   url = 'https://github.com/ElevenPaths/AtomShields-cli',
   project_urls={
-      "Documentation": "https://atomshields-cli.readthedocs.io",
+      "Documentation": "https://atomshields.readthedocs.io",
       "Source Code": "https://github.com/ElevenPaths/AtomShields-cli",
   },
   download_url = 'https://github.com/ElevenPaths/AtomShields-cli/tarball/' + version,

@@ -3,7 +3,7 @@ AtomShields Cli
 ===============
 
 What is AtomShields Cli?
---------------------
+------------------------
 
 Command-Line Interface to use the software `AtomShields <https://github.com/ElevenPaths/AtomShields>`_
 
@@ -39,7 +39,7 @@ The *target* option set the path to scan, or the plugin (checker/report) to inst
 
 
 Show all checkers
------------
+-----------------
 
 .. code-block:: shell
 
@@ -48,7 +48,7 @@ Show all checkers
 ------------------------------------------------------------------------------------------
 
 Show all reports
------------
+----------------
 
 .. code-block:: shell
 
@@ -58,7 +58,7 @@ Show all reports
 
 
 Install checker
------------
+---------------
 
 .. code-block:: shell
 
@@ -67,7 +67,7 @@ Install checker
 ------------------------------------------------------------------------------------------
 
 Install report
------------
+--------------
 
 .. code-block:: shell
 
@@ -76,7 +76,7 @@ Install report
 ------------------------------------------------------------------------------------------
 
 Uninstall checker
------------
+-----------------
 
 .. code-block:: shell
 
@@ -91,7 +91,7 @@ or
 ------------------------------------------------------------------------------------------
 
 Uninstall report
------------
+----------------
 
 .. code-block:: shell
 
@@ -106,11 +106,8 @@ or
 ------------------------------------------------------------------------------------------
 
 Run the scan
------------
+------------
 
 .. code-block:: shell
 
   ascli run --target path/to/file.py --name repo_name
-
-
-------------------------------------------------------------------------------------------
