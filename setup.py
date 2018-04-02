@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 u"""
 Copyright 2018 ElevenPaths - Telefonica Digital España
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
+
     http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,7 +16,6 @@ limitations under the License.
 """
 
 import shutil, os, stat
-
 from setuptools import find_packages
 from distutils.core import setup
 
@@ -22,10 +24,11 @@ def read_file(filename):
         return f.read()
 
 package_name = 'atomshieldscli'
+version = read_file('VERSION').strip()
 
 setup(
   name = package_name,
-  version = read_file('VERSION').strip(),
+  version = version,
   install_requires=read_file('requirements.txt').splitlines(),
   packages = find_packages(),
   author = 'ElevenPaths',
@@ -34,10 +37,10 @@ setup(
   author_email = 'diego.fernandez@11paths.com, david.amrani@11paths.com',
   url = 'https://github.com/ElevenPaths/AtomShields-cli',
   project_urls={
-      "Documentation": "https://atomshields-cli.readthedocs.io",
+      "Documentation": "https://atomshields.readthedocs.io",
       "Source Code": "https://github.com/ElevenPaths/AtomShields-cli",
   },
-  download_url = 'https://github.com/ElevenPaths/AtomShields-cli/tarball/0.1',
+  download_url = 'https://github.com/ElevenPaths/AtomShields-cli/tarball/' + version,
   keywords = 'security, source code, analysis',
   license='Apache 2.0',
   classifiers=[
@@ -74,4 +77,3 @@ for path in paths:
 if not installed:
   from termcolor import colored
   print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
-
