@@ -22,10 +22,11 @@ def read_file(filename):
         return f.read()
 
 package_name = 'atomshieldscli'
+version = read_file('VERSION').strip()
 
 setup(
   name = package_name,
-  version = read_file('VERSION').strip(),
+  version = version,
   install_requires=read_file('requirements.txt').splitlines(),
   packages = find_packages(),
   author = 'ElevenPaths',
@@ -37,7 +38,7 @@ setup(
       "Documentation": "https://atomshields-cli.readthedocs.io",
       "Source Code": "https://github.com/ElevenPaths/AtomShields-cli",
   },
-  download_url = 'https://github.com/ElevenPaths/AtomShields-cli/tarball/0.1',
+  download_url = 'https://github.com/ElevenPaths/AtomShields-cli/tarball/' + version,
   keywords = 'security, source code, analysis',
   license='Apache 2.0',
   classifiers=[
@@ -74,4 +75,3 @@ for path in paths:
 if not installed:
   from termcolor import colored
   print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
-
