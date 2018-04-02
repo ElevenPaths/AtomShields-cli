@@ -3,7 +3,7 @@
 
 #
 # This file is part of AtomShields
-# Copyright (C) ElevenPaths 
+# Copyright (C) ElevenPaths
 #
 # DESCRIPTION
 # This file creates a CLI to interact with Atomshields
@@ -115,7 +115,7 @@ class AtomshieldsCli(object):
 		if value is not None:
 			self._action = value.lower()
 		else:
-			self._action = value	
+			self._action = value
 
 	@property
 	def path(self):
@@ -192,7 +192,7 @@ class AtomshieldsCli(object):
 	def _show(self, path, classArgs = None):
 		"""
 		Prints the plugins into <path>.
-		
+
 		Args:
 			path(str): 	Path to find python files
 			classArgs(str): Class arguments to instanciate the class
@@ -218,16 +218,16 @@ class AtomshieldsCli(object):
 		"""
 		Prints all the reports.
 		"""
+		print ""
+		print "%-20s\t%-60s" % ("Name", "Description")
+		print "-"*90
 		self._show(path = AtomShieldsScanner.REPORTS_DIR, classArgs = {})
 
 
 	def printBanner(self):
 		rows, columns = map(int, os.popen('stty size', 'r').read().split())
 		import atomshieldscli.banner as banner
-		if columns >= 190:
-			print banner.big
-		else:
-			print banner.small
+		print banner.small
 
 	def execute(self):
 		"""
@@ -277,8 +277,8 @@ if __name__ == "__main__":
 
 	# Get Args
 	parser = argparse.ArgumentParser(prog=AtomshieldsCli.COMMAND, add_help=True,
-		formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=50, width=120), 
-		description="""Performs an action into a context. The actions are defines in the first argument, and the context in the second. You also can set options.""", 
+		formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=50, width=120),
+		description="""Performs an action into a context. The actions are defines in the first argument, and the context in the second. You also can set options.""",
 		epilog="""For more documentation, please visit https://github.com/ElevenPaths/AtomShields-cli\n\n""")
 	parser.add_argument("action", action="store", default="show", help="Set the action to do. Allowed values are: {actions}".format(actions=', '.join(AtomshieldsCli.ACTIONS)))
 	parser.add_argument("context", nargs='?', action="store", default=None, help="Set the context to operate with checkers. Allowed values are: {contexts}".format(contexts=', '.join(AtomshieldsCli.CONTEXTS)))
@@ -300,6 +300,3 @@ if __name__ == "__main__":
 	cli.path = args.target
 	cli.name = args.name
 	cli.execute()
-
-
-
