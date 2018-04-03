@@ -32,23 +32,25 @@ class AscliCommand(Command):
     description = 'Install ascli as binary into $PATH'
     user_options = []
 
-    def __init__(self):
-        super(AscliCommand, self).__init__()
-        self.file = open("/tmp/ascli.log", "w")
+
+
 
 
     def initialize_options(self):
         """Set default values for options."""
-        pass
+        self.file = open("/tmp/ascli.log", "w")
 
     def finalize_options(self):
         """Post-process options."""
         pass
 
     def log(self, msg):
+        if self.file is None:
+            self.file = open("/tmp/ascli.log", "w")
+        else:
+            self.file.write(msg)
+            self.file.write("\n")
         print msg
-        self.file.write(msg)
-        self.file.write("\n")
 
     def run(self):
         self.log("Instalando ascli. . . .")
