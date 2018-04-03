@@ -57,23 +57,23 @@ setup(
   ],
 )
 
-
+print "Instalando ascli. . . ."
 # Install as binary
 paths = ["/usr/local/bin", "/usr/bin", "/usr/sbin"]
 installed = False
 for path in paths:
-  if os.access(path, os.W_OK):
-    #Copy file
-    source = os.path.join(os.path.dirname(__file__), package_name, 'cli.py')
-    destination = os.path.join(path, "ascli")
-    shutil.copy(source, destination)
-    # Add a+x
-    st = os.stat(destination)
-    os.chmod(destination, st.st_mode | stat.S_IEXEC)
-    print "{package} installed into {destination}".format(package=package_name, destination=destination)
-    installed = True
-    break
+    if os.access(path, os.W_OK):
+        #Copy file
+        source = os.path.join(os.path.dirname(__file__), package_name, 'cli.py')
+        destination = os.path.join(path, "ascli")
+        shutil.copy(source, destination)
+        # Add a+x
+        st = os.stat(destination)
+        os.chmod(destination, st.st_mode | stat.S_IEXEC)
+        print "{package} installed into {destination}".format(package=package_name, destination=destination)
+        installed = True
+        break
 
 if not installed:
-  from termcolor import colored
-  print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
+    from termcolor import colored
+    print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
