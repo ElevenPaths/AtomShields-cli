@@ -17,11 +17,65 @@ limitations under the License.
 
 import shutil, os, stat
 from setuptools import find_packages
+from setuptools.command.build_py import build_py
+from setuptools.command.install import install as install_py
 from distutils.core import setup
+from distutils.cmd import Command
 
 def read_file(filename):
     with open(filename) as f:
         return f.read()
+
+
+class AscliCommand(Command):
+    description = 'Install ascli as binary into $PATH'
+    user_options = []
+
+    def initialize_options(self):
+        """Set default values for options."""
+        pass
+
+    def finalize_options(self):
+        """Post-process options."""
+        pass
+
+    def run(self):
+        print "Instalando ascli. . . ."
+        # Install as binary
+        paths = ["/usr/local/bin", "/usr/bin", "/usr/sbin"]
+        installed = False
+        for path in paths:
+            if os.access(path, os.W_OK):
+                #Copy file
+                source = os.path.join(os.path.dirname(__file__), package_name, 'cli.py')
+                destination = os.path.join(path, "ascli")
+                shutil.copy(source, destination)
+                # Add a+x
+                st = os.stat(destination)
+                os.chmod(destination, st.st_mode | stat.S_IEXEC)
+                print "{package} installed into {destination}".format(package=package_name, destination=destination)
+                installed = True
+                break
+
+        if not installed:
+            from termcolor import colored
+            print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
+
+
+class BuildPyCommand(build_py):
+    """Custom build command."""
+
+    def run(self):
+        build_py.run(self)
+        self.run_command('ascli')
+
+
+class InstallCommand(install_py):
+    """Custom install command."""
+
+    def run(self):
+        install_py.run(self)
+        self.run_command('ascli')
 
 package_name = 'atomshieldscli'
 version = read_file('VERSION').strip()
@@ -55,25 +109,9 @@ setup(
       'Topic :: Software Development :: Quality Assurance',
       'Topic :: Software Development :: Testing',
   ],
+  cmdclass = {
+    'ascli': AscliCommand,
+    'install': InstallCommand
+    # 'build_py': BuildPyCommand
+  }
 )
-
-print "Instalando ascli. . . ."
-# Install as binary
-paths = ["/usr/local/bin", "/usr/bin", "/usr/sbin"]
-installed = False
-for path in paths:
-    if os.access(path, os.W_OK):
-        #Copy file
-        source = os.path.join(os.path.dirname(__file__), package_name, 'cli.py')
-        destination = os.path.join(path, "ascli")
-        shutil.copy(source, destination)
-        # Add a+x
-        st = os.stat(destination)
-        os.chmod(destination, st.st_mode | stat.S_IEXEC)
-        print "{package} installed into {destination}".format(package=package_name, destination=destination)
-        installed = True
-        break
-
-if not installed:
-    from termcolor import colored
-    print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
