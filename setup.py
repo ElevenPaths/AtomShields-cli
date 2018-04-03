@@ -111,7 +111,7 @@ setup(
   ],
   cmdclass = {
     'ascli': AscliCommand,
-    'install': InstallCommand
+    'install': InstallCommand,
     'build_py': BuildPyCommand
   }
 )
