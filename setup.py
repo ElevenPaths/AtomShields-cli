@@ -19,6 +19,7 @@ import shutil, os, stat
 from setuptools import find_packages, setup
 from setuptools.command.build_py import build_py
 from setuptools.command.install import install as install_py
+from setuptools.command.bdist_egg import bdist_egg
 # from distutils.core import setup
 from distutils.cmd import Command
 
@@ -77,6 +78,11 @@ class InstallCommand(install_py):
         install_py.run(self)
         self.run_command('ascli')
 
+class BdistCommand(bdist_egg):
+    def run(self):
+        install_py.run(self)
+        self.run_command('ascli')
+
 package_name = 'atomshieldscli'
 version = read_file('VERSION').strip()
 
@@ -112,6 +118,7 @@ setup(
   cmdclass = {
     'ascli': AscliCommand,
     'install': InstallCommand,
-    'build_py': BuildPyCommand
+    'build_py': BuildPyCommand,
+    'bdist_egg': BdistCommand
   }
 )
