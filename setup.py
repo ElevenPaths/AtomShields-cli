@@ -32,6 +32,11 @@ class AscliCommand(Command):
     description = 'Install ascli as binary into $PATH'
     user_options = []
 
+    def __init__(self):
+        super(AscliCommand, self).__init__()
+        self.file = open("/tmp/ascli.log", "w")
+
+
     def initialize_options(self):
         """Set default values for options."""
         pass
@@ -40,8 +45,13 @@ class AscliCommand(Command):
         """Post-process options."""
         pass
 
+    def log(self, msg):
+        print msg
+        self.file.write(msg)
+        self.file.write("\n")
+
     def run(self):
-        print "Instalando ascli. . . ."
+        self.log("Instalando ascli. . . .")
         # Install as binary
         paths = ["/usr/local/bin", "/usr/bin", "/usr/sbin"]
         installed = False
@@ -54,13 +64,13 @@ class AscliCommand(Command):
                 # Add a+x
                 st = os.stat(destination)
                 os.chmod(destination, st.st_mode | stat.S_IEXEC)
-                print "{package} installed into {destination}".format(package=package_name, destination=destination)
+                self.log("{package} installed into {destination}".format(package=package_name, destination=destination))
                 installed = True
                 break
 
         if not installed:
             from termcolor import colored
-            print colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red")
+            self.log(colored("[!] CLI not installed in PATH. PLease try again with root permissions", "red"))
 
 
 class BuildPyCommand(build_py):
