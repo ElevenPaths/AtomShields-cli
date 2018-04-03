@@ -3,7 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [1.0] - 2017-03-27
+## [1.3] - 2018-04-03
+### Added
+- Custom steps into setup.py
+
+## [1.0] - 2018-03-27
 ### Added
 - Show help message
 - Show all checkers
