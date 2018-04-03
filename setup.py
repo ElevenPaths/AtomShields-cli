@@ -16,10 +16,10 @@ limitations under the License.
 """
 
 import shutil, os, stat
-from setuptools import find_packages
+from setuptools import find_packages, setup
 from setuptools.command.build_py import build_py
 from setuptools.command.install import install as install_py
-from distutils.core import setup
+# from distutils.core import setup
 from distutils.cmd import Command
 
 def read_file(filename):
@@ -111,7 +111,7 @@ setup(
   ],
   cmdclass = {
     'ascli': AscliCommand,
-    'install': InstallCommand
+    'install': InstallCommand,
     'build_py': BuildPyCommand
   }
 )
