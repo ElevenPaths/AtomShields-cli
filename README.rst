@@ -2,10 +2,7 @@
 AtomShields Cli
 ===============
 
-What is AtomShields Cli?
-------------------------
-
-Command-Line Interface to use the software `AtomShields <https://github.com/ElevenPaths/AtomShields>`_
+AtomShields Cli is a Command-Line Interface to use the software `AtomShields <https://github.com/ElevenPaths/AtomShields>`_
 
 .. raw:: html
 
@@ -17,7 +14,7 @@ Installation
 
 .. code-block:: shell
 
-  pip install atomshields-cli
+  pip install atomshieldscli
 
 
 Basic usage
